@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+import argparse, os, shutil, sys
+
+data_dir = './data'
+
+parser = argparse.ArgumentParser(description="tmp")
+parser.add_argument('-p', '--path', type=str, required=True)
+parser.add_argument('-n', '--name', type=str, required=True)
+
+args = parser.parse_args()
+ast = os.path.join(args.path, 'asteroid.inp')
+mat = os.path.join(args.path, 'material.inp')
+data_file = os.path.join(args.path, 'Ice', 'jdata.dat')
+result_path = os.path.join(data_dir, args.name)
+if os.path.exists(result_path):
+    print("FAILURE, RESULTS EXIST ALREADY")
+    sys.exit()
+
+os.mkdir(result_path)
+
+if not os.path.exists(ast) or not os.path.exists(mat) or not os.path.exists(data_file):
+    print("FAILURE, FILE NOT FOUND")
+    sys.exit()
+else:
+    shutil.copy(ast, result_path)
+    shutil.copy(mat, result_path)
+    shutil.copy(data_file, result_path)
+print("Done")
