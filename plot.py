@@ -15,10 +15,10 @@ except:
 # damage and pressure for the demo2D example
 
 # Make an output directory
-dirname = './generatedPlots/2kmPlots'
+dirname = './generatedPlots/25kms'
 
 # Open the datafile
-model = psp.opendatfile('./data/job-1_2km/jdata.dat')
+model = psp.opendatfile('./data/job-25kmhr/jdata.dat')
 
 # Set the distance units to km
 model.setScale('km')
@@ -30,7 +30,7 @@ ax = fig.add_subplot(111, aspect='equal')
 divider = make_axes_locatable(ax)
 
 # Loop over timesteps
-for i in np.arange(0,5000):
+for i in np.arange(0,5000,5):
 
     # Set the axis labels
     ax.set_xlabel('r [km]')

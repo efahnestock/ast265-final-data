@@ -7,8 +7,8 @@ import numpy as np
 # a vertical pressure profile of the Chicxulub example
 
 # Open the datafile
-model=psp.opendatfile('/media/sf_Public/data/job-1_6km/jdata.dat')
-#model=psp.opendatfile('./data/job-1_4km/jdata.dat')
+#model=psp.opendatfile('/media/sf_Public/data/job-1_6km/jdata.dat')
+model=psp.opendatfile('./data/job-9i/jdata.dat')
 
 # Set the distance units to mm
 model.setScale('km')
@@ -30,7 +30,7 @@ ax.set_ylabel('z [km]')
 # Set the axis limits
 rad_km = 50
 depth_km = 30
-height_km = 100
+height_km = 10
 ax.set_xlim(-rad_km,rad_km)
 ax.set_ylim(-depth_km,height_km)
 #stp = model.readStep('TrM',i)
@@ -38,7 +38,6 @@ ax.set_ylim(-depth_km,height_km)
 # Read the time steps from the datafile
 nstep=0
 stepn=model.readStep('TrM',0)
-stepTrT = model.readStep('TrT',0)
 # Plot the pressure field
 for u in range(model.tracer_numu): #loop over tracer clouds
     tstart = model.tru[u].start
@@ -52,17 +51,16 @@ for u in range(model.tracer_numu): #loop over tracer clouds
 
 cb=fig.colorbar(scat)
 cb.set_label('Material Properties')
-cb2=fig.colorbar(scat2)
-cb2.set_label('Peak Temperature (K)')
-ax.set_title('Ice: T = {: 5.2f} s'.format(stepTrT.time))
-for i in np.arange(0,5000,10):
+for i in np.arange(0,5000,5):
     # Set up a pyplot figure
     ax.cla()
-    rad_km = 50
-    depth_km = 30
-    height_km = 100
+    rad_km = 40 
+    depth_km = 15
+    height_km =10
     ax.set_xlim(-rad_km,rad_km)
     ax.set_ylim(-depth_km,height_km)
+    ax.set_xlabel("km")
+    ax.set_ylabel("km")
     
     nstep=0
     stepn=model.readStep('TrM',i)
@@ -80,6 +78,6 @@ for i in np.arange(0,5000,10):
         #scat2 = ax.scatter(-stepTrT.xmark[tstart:tend],stepTrT.ymark[tstart:tend],
         #        c=stepTrT.TrT[tstart:tend],s=4,vmin=0,vmax=3000)
 
-    ax.set_title('Ice: T = {: 5.2f} s'.format(stepTrT.time))
+    ax.set_title('Ice: T = {: 5.2f} s'.format(stepn.time))
     # Save the figure
     fig.savefig('./generatedPlots/Figure{:05d}.png'.format(i))
